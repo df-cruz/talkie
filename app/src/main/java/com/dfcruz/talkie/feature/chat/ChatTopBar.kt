@@ -29,7 +29,7 @@ fun ChatTopBar(avatarImage: String?, title: String?, onBackPressed: () -> Unit) 
             ) {
                 Spacer(Modifier.width(24.dp))
 
-                TalkieAvatar(image = avatarImage, size = 36.dp)
+                TalkieAvatar(size = 36.dp)
 
                 Spacer(Modifier.width(8.dp))
 
