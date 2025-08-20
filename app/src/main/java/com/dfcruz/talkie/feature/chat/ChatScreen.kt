@@ -18,13 +18,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dfcruz.talkie.ui.component.TalkieText
 import com.dfcruz.talkie.ui.theme.TalkieTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ChatScreen(
+    viewModel: ChatViewModel = viewModel(),
     onBackPressed: () -> Unit
 ) {
+
+    val chatUiState by viewModel.uiState.collectAsStateWithLifecycle()
     val chatMessages by remember { mutableStateOf(listOf<Message>()) }
 
     Scaffold(
