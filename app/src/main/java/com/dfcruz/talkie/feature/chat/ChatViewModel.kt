@@ -7,6 +7,8 @@ import com.dfcruz.talkie.data.remote.websocket.Error
 import com.dfcruz.talkie.data.remote.websocket.Message
 import com.dfcruz.talkie.data.remote.websocket.OkHttpWebsocket
 import com.dfcruz.talkie.data.remote.websocket.Websocket
+import com.dfcruz.talkie.platform.ConnectivityInfoProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,8 +17,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class ChatViewModel : ViewModel() {
+@HiltViewModel
+class ChatViewModel @Inject constructor(
+    private val connectivityInfoProvider: ConnectivityInfoProvider
+) : ViewModel() {
 
     companion object {
         const val TAG = "ChatViewModel"
