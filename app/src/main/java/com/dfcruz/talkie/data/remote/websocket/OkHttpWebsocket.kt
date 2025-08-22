@@ -3,16 +3,18 @@ package com.dfcruz.talkie.data.remote.websocket
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import javax.inject.Inject
 
-private const val BASE_URL = "https://example.com"
+private const val BASE_URL = "https://3333.com"
 private const val EVENT_BUFFER_CAPACITY = 50
 
-class OkHttpWebsocket : Websocket {
+class OkHttpWebsocket @Inject constructor() : Websocket {
 
     private val client: OkHttpClient = OkHttpClient()
     private var socket: WebSocket? = null
@@ -23,7 +25,7 @@ class OkHttpWebsocket : Websocket {
     val socketListener = object : WebSocketListener() {
         override fun onMessage(webSocket: WebSocket, text: String) {
             super.onMessage(webSocket, text)
-            events.tryEmit(Message(text))
+            events.tryEmit(Message(Json.decodeFromString(text)))
         }
 
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
@@ -46,6 +48,6 @@ class OkHttpWebsocket : Websocket {
     }
 
     override fun sendEvent(request: WebSocketRequest) {
-        socket?.send(request.toString())
+        socket?.send(Json.encodeToString(request))
     }
 }
