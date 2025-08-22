@@ -4,9 +4,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,9 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.dfcruz.talkie.ui.component.TalkieMessageComposer
 import com.dfcruz.talkie.ui.component.TalkieText
 import com.dfcruz.talkie.ui.theme.TalkieTheme
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ChatScreen(
@@ -30,22 +37,27 @@ fun ChatScreen(
 ) {
 
     val chatUiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val chatMessages by remember { mutableStateOf(listOf<Message>()) }
 
     Scaffold(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .safeDrawingPadding()
+            .consumeWindowInsets(WindowInsets.ime),
         topBar = {
             ChatTopBar(avatarImage = null, title = "John Doe", onBackPressed = onBackPressed)
         },
+        bottomBar = {
+            TalkieMessageComposer { }
+        }
     ) { contentPadding ->
         LazyColumn(
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier.fillMaxSize().padding(contentPadding),
+            verticalArrangement = Arrangement.Bottom,
             reverseLayout = true,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
         ) {
-            items(chatMessages, key = { it.id }) { message ->
+            items(chatUiState.messages, key = { it.id }) { message ->
+                Spacer(Modifier.height(16.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),

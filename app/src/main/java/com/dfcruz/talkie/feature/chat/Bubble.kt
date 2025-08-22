@@ -26,7 +26,7 @@ fun Bubble(
         border = null
     ) {
         Box(
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp)
         ) {
             content()
         }

@@ -27,14 +27,13 @@ fun ChatTopBar(avatarImage: String?, title: String?, onBackPressed: () -> Unit) 
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Spacer(Modifier.width(24.dp))
 
-                TalkieAvatar(size = 36.dp)
+                TalkieAvatar(size = 40.dp)
 
                 Spacer(Modifier.width(8.dp))
 
                 title?.let {
-                    TalkieText(text = title)
+                    TalkieText(text = title, style = TalkieTheme.typography.titleMedium)
                 }
             }
         },
