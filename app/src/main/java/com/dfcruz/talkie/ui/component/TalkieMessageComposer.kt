@@ -4,9 +4,11 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -50,25 +52,27 @@ fun TalkieMessageComposer(
                     .weight(1f)
                     .animateContentSize(),
                 value = value,
+                innerPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                 onValueChange = { value = it },
                 placeholder = {
                     TalkieText(
                         text = "Write a message",
-                        style = TalkieTheme.typography.bodyLarge,
+                        style = TalkieTheme.typography.bodyMedium,
                         color = TalkieTheme.colors.onSurfaceVariant
                     )
                 },
+                trailingContent = {
+                    if (!value.isEmpty()) {
+                        SendMessageButton {
+                            onSendMessage(value)
+                        }
+                    } else {
+                        Spacer(Modifier.height(28.dp))
+                    }
+                }
             )
 
-            if (!value.isEmpty()) {
-                Spacer(Modifier.size(8.dp))
-                SendMessageButton {
-                    onSendMessage(value)
-                }
-                Spacer(Modifier.size(16.dp))
-            } else {
-                Spacer(Modifier.size(16.dp))
-            }
+            Spacer(Modifier.size(16.dp))
         }
     }
 }
