@@ -47,7 +47,7 @@ fun TalkieTextField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
-    textStyle: TextStyle = TalkieTheme.typography.bodyLarge,
+    textStyle: TextStyle = TalkieTheme.typography.bodyMedium,
     innerPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     keyboardOptions: KeyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
     placeholder: @Composable (RowScope.() -> Unit)? = null,
@@ -58,7 +58,7 @@ fun TalkieTextField(
 
     BasicTextField(
         modifier = modifier
-            .clip(shape = TalkieTheme.shapes.large)
+            .clip(shape = TalkieTheme.shapes.extraLarge)
             .background(TalkieTheme.colors.surfaceContainerHigh)
             .padding(innerPadding),
         value = textState,
