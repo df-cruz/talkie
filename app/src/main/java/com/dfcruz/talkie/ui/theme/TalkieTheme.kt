@@ -7,8 +7,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import com.dfcruz.talkie.ui.theme.talkie.talkieColorScheme
 import com.dfcruz.talkie.ui.theme.talkie.talkieShapes
+import com.dfcruz.talkie.ui.theme.talkie.talkieSizes
 import com.dfcruz.talkie.ui.theme.talkie.talkieTypography
-
 
 @Composable
 fun TalkieTheme(
@@ -20,6 +20,7 @@ fun TalkieTheme(
         LocalThemeColorScheme provides talkieColorScheme,
         LocalThemeShapes provides talkieShapes,
         LocalThemeTypography provides talkieTypography,
+        LocalThemeSizes provides talkieSizes,
     ) {
         MaterialTheme(
             colorScheme = talkieColorScheme.toMaterialColorScheme(),
@@ -46,4 +47,9 @@ object TalkieTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalThemeTypography.current
+
+    val sizes: ThemeSizes
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalThemeSizes.current
 }

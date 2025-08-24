@@ -22,7 +22,7 @@ class ChatViewModel @Inject constructor(
     }
 
     private val _uiState: MutableStateFlow<ChatUiState> =
-        MutableStateFlow(ChatUiState(isLoading = true))
+        MutableStateFlow(ChatUiState(isLoading = false, messages = sampleMessages.reversed()))
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
     init {
