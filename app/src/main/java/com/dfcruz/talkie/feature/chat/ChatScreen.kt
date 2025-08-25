@@ -1,15 +1,14 @@
 package com.dfcruz.talkie.feature.chat
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
@@ -37,30 +36,47 @@ fun ChatScreen(
         LocalMessageDisplayPolicy provides visibilityPolicy,
     ) {
         Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .safeDrawingPadding()
-                .consumeWindowInsets(WindowInsets.ime),
             topBar = {
-                ChatTopBar(avatarImage = null, title = "John Doe", onBackPressed = onBackPressed)
+                ChatTopBar(
+                    avatarImage = null,
+                    title = "John Doe",
+                    onBackPressed = onBackPressed
+                )
             },
-            bottomBar = {
-                TalkieMessageComposer { }
-            }
+            contentWindowInsets = WindowInsets(0)
         ) { contentPadding ->
-            LazyColumn(
-                modifier = Modifier
+            Column(
+                Modifier
                     .fillMaxSize()
-                    .padding(contentPadding),
-                verticalArrangement = Arrangement.Bottom,
-                reverseLayout = true,
-                contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
+                    .padding(contentPadding)
+                    .navigationBarsPadding()
+                    .imePadding()
             ) {
-                items(chatUiState.messages, key = { it.id }) { message ->
-                    Spacer(Modifier.height(ChatBubblePolicy.spacing(message.groupPosition)))
-                    MessageRow(message)
-                }
+                MessagesView(
+                    modifier = Modifier.weight(1f),
+                    messages = chatUiState.messages,
+                )
+                TalkieMessageComposer(
+                    modifier = Modifier
+                ) { }
             }
+        }
+    }
+}
+
+@Composable
+fun MessagesView(
+    modifier: Modifier = Modifier,
+    messages: List<Message>
+) {
+    LazyColumn(
+        modifier = modifier,
+        reverseLayout = true,
+        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
+    ) {
+        items(messages, key = { it.id }) { message ->
+            Spacer(Modifier.height(ChatBubblePolicy.spacing(message.groupPosition)))
+            MessageRow(message)
         }
     }
 }
