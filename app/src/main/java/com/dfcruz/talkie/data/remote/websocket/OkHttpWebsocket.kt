@@ -19,22 +19,28 @@ class OkHttpWebsocket @Inject constructor() : Websocket {
     private val client: OkHttpClient = OkHttpClient()
     private var socket: WebSocket? = null
 
-    private val events: MutableSharedFlow<WebSocketEvent> =
+    private val events: MutableSharedFlow<WebsocketResultEnvelope> =
         MutableSharedFlow(extraBufferCapacity = EVENT_BUFFER_CAPACITY)
 
     val socketListener = object : WebSocketListener() {
         override fun onMessage(webSocket: WebSocket, text: String) {
             super.onMessage(webSocket, text)
-            events.tryEmit(Message(Json.decodeFromString(text)))
+            events.tryEmit(WebsocketResultEnvelope.Success(Json.decodeFromString<Event>(text)))
         }
 
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
             super.onFailure(webSocket, t, response)
-            events.tryEmit(Error(t))
+            events.tryEmit(
+                WebsocketResultEnvelope.Error(
+                    response?.message.orEmpty(),
+                    response?.code,
+                    t
+                )
+            )
         }
     }
 
-    override fun connect(): Flow<WebSocketEvent> {
+    override fun connect(): Flow<WebsocketResultEnvelope> {
         if (socket == null) {
             val request = Request.Builder().url(BASE_URL).build()
             socket = client.newWebSocket(request, socketListener)
@@ -47,7 +53,7 @@ class OkHttpWebsocket @Inject constructor() : Websocket {
         socket = null
     }
 
-    override fun sendEvent(request: WebSocketRequest) {
+    override fun sendEvent(request: WebsocketEventEnvelope<Event>) {
         socket?.send(Json.encodeToString(request))
     }
 }

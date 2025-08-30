@@ -3,7 +3,7 @@ package com.dfcruz.talkie.data.remote.websocket
 import kotlinx.coroutines.flow.Flow
 
 interface Websocket {
-    fun connect(): Flow<WebSocketEvent>
+    fun connect(): Flow<WebsocketResultEnvelope>
     fun disconnect()
-    fun sendEvent(request: WebSocketRequest)
+    fun sendEvent(request: WebsocketEventEnvelope<Event>)
 }
