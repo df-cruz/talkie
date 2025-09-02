@@ -24,8 +24,8 @@ import com.dfcruz.talkie.ui.theme.TalkieTheme
 fun MessageRow(
     message: Message,
     onUserClick: (String) -> Unit = {},
-    onMessagedClick: (Long) -> Unit = {},
-    onMessagedLongClick: (Long) -> Unit = {},
+    onMessagedClick: (String) -> Unit = {},
+    onMessagedLongClick: (String) -> Unit = {},
 ) {
     val messageDisplayPolicy = LocalMessageDisplayPolicy.current
 
@@ -129,7 +129,7 @@ fun MessageRowPreview() {
                 // ----- Current User Messages -----
                 MessageRow(
                     message = Message(
-                        id = 1,
+                        id = "1",
                         content = MessageContent.Text("This is the first message from me (CurrentUser)."),
                         createdAtLabel = "09:10",
                         author = MessageAuthor.CurrentUser,
@@ -140,7 +140,7 @@ fun MessageRowPreview() {
 
                 MessageRow(
                     message = Message(
-                        id = 2,
+                        id = "2",
                         content = MessageContent.Text("Middle message from me, should have middle bubble shape."),
                         createdAtLabel = "09:11",
                         author = MessageAuthor.CurrentUser,
@@ -151,7 +151,7 @@ fun MessageRowPreview() {
 
                 MessageRow(
                     message = Message(
-                        id = 3,
+                        id = "3",
                         content = MessageContent.Text("Last message from me, bottom-right bubble."),
                         createdAtLabel = "09:12",
                         author = MessageAuthor.CurrentUser,
@@ -164,7 +164,7 @@ fun MessageRowPreview() {
                 // ----- External User Messages -----
                 MessageRow(
                     message = Message(
-                        id = 4,
+                        id = "4",
                         content = MessageContent.Text("First message from other user."),
                         createdAtLabel = "09:13",
                         author = MessageAuthor.External(
@@ -183,7 +183,7 @@ fun MessageRowPreview() {
 
                 MessageRow(
                     message = Message(
-                        id = 5,
+                        id = "5",
                         content = MessageContent.Text("Middle message from other user."),
                         createdAtLabel = "09:14",
                         author = MessageAuthor.External(
@@ -203,7 +203,7 @@ fun MessageRowPreview() {
 
                 MessageRow(
                     message = Message(
-                        id = 6,
+                        id = "6",
                         content = MessageContent.Text("Last message from other user."),
                         createdAtLabel = "09:15",
                         author = MessageAuthor.External(

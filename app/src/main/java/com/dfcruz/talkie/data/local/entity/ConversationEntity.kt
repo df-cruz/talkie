@@ -8,6 +8,9 @@ import java.util.Date
 data class ConversationEntity(
     @PrimaryKey val id: String,
     val conversationOwnerId: String? = null,
+    val name: String? = null,
+    val avatar: String? = null,
+    val messageDraft: String? = null,
     val createdAt: Date? = null,
     val updatedAt: Date? = null,
     val deletedAt: Date? = null

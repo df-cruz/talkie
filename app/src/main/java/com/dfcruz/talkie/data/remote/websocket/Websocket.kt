@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 interface Websocket {
     fun connect(): Flow<WebsocketResultEnvelope>
     fun disconnect()
-    fun sendEvent(request: WebsocketEventEnvelope<Event>)
+    fun send(request: WebsocketEventEnvelope<Event>)
 }

@@ -3,9 +3,7 @@ package com.dfcruz.talkie.data.local
 import android.content.Context
 import androidx.room.Room
 import com.dfcruz.talkie.data.local.dao.ConversationDao
-import com.dfcruz.talkie.data.local.dao.ConversationMemberDao
 import com.dfcruz.talkie.data.local.dao.MessageDao
-import com.dfcruz.talkie.data.local.dao.MessageReadByDao
 import com.dfcruz.talkie.data.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -36,14 +34,5 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun messageDao(database: TalkieDatabase): MessageDao = database.messageDao()
-
-    @Provides
-    @Singleton
-    fun conversationMemberDao(database: TalkieDatabase): ConversationMemberDao =
-        database.conversationMemberDao()
-
-    @Provides
-    @Singleton
-    fun messageReadByDao(database: TalkieDatabase): MessageReadByDao = database.messageReadByDao()
 
 }

@@ -14,7 +14,7 @@ package com.dfcruz.talkie.feature.chat
  * @property isSending Whether the message is still in the process of being sent.
  */
 data class Message(
-    val id: Long,
+    val id: String,
     val content: MessageContent,
     val createdAtLabel: String,
     val author: MessageAuthor,

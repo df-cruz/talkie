@@ -53,7 +53,7 @@ class OkHttpWebsocket @Inject constructor() : Websocket {
         socket = null
     }
 
-    override fun sendEvent(request: WebsocketEventEnvelope<Event>) {
+    override fun send(request: WebsocketEventEnvelope<Event>) {
         socket?.send(Json.encodeToString(request))
     }
 }

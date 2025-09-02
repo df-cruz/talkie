@@ -104,7 +104,7 @@ private fun UnreadMessageIndicator(
 @Composable
 fun ChatThreadPreview() {
     val conversation = ConversationUi(
-        1,
+        "1",
         "",
         "Alice Johnson",
         "Hey, are we still on for tomorrow?",

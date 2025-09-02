@@ -54,14 +54,14 @@ fun ConversationScreen(
                 .fillMaxSize()
                 .padding(contentPaddings),
         ) {
-            items(conversations, key = { it.id }) { thread ->
+            items(conversations, key = { it.id }) { message ->
                 ConversationItem(
                     modifier = Modifier.clickable { openChat() },
-                    avatarUrl = thread.avatarUrl,
-                    title = thread.title,
-                    message = thread.messagePreview,
-                    time = thread.messageTime,
-                    unreadMessageCount = thread.unreadMessageCount,
+                    avatarUrl = message.avatarUrl,
+                    title = message.title,
+                    message = message.messagePreview,
+                    time = message.messageTime,
+                    unreadMessageCount = message.unreadMessageCount,
                 )
             }
         }
