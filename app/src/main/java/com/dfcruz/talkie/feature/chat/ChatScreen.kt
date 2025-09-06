@@ -18,12 +18,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dfcruz.talkie.ui.component.TalkieMessageComposer
 
 @Composable
 fun ChatScreen(
-    viewModel: ChatViewModel = viewModel(),
+    viewModel: ChatViewModel,
     onBackPressed: () -> Unit
 ) {
     val chatUiState by viewModel.uiState.collectAsStateWithLifecycle()

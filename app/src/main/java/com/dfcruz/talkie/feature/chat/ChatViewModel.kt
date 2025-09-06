@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dfcruz.talkie.domain.usecase.GetConversationMessagesUseCase
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,18 +15,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
-import javax.inject.Inject
 
-@HiltViewModel
-class ChatViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ChatViewModel.Factory::class)
+class ChatViewModel @AssistedInject constructor(
     private val getConversationMessagesUseCase: GetConversationMessagesUseCase,
+    @Assisted private val conversationId: String
 ) : ViewModel() {
 
     companion object {
         const val TAG = "ChatViewModel"
     }
-
-    private val conversationId = ""
 
     private val _uiState: MutableStateFlow<ChatUiState> =
         MutableStateFlow(ChatUiState(isLoading = false, messages = listOf()))
@@ -54,5 +55,10 @@ class ChatViewModel @Inject constructor(
         } catch (t: Throwable) {
             Log.e(TAG, "Error", t)
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(conversationId: String): ChatViewModel
     }
 }

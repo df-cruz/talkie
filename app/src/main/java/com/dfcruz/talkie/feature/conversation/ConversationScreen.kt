@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dfcruz.talkie.ui.component.TalkieAvatar
 import com.dfcruz.talkie.ui.component.TalkieIconButton
 import com.dfcruz.talkie.ui.component.TalkieText
@@ -24,8 +23,8 @@ import com.dfcruz.talkie.ui.component.TalkieText
 @Composable
 fun ConversationScreen(
     modifier: Modifier = Modifier,
-    viewModel: ConversationsViewModel = viewModel(),
-    openChat: () -> Unit
+    viewModel: ConversationsViewModel,
+    openChat: (String) -> Unit
 ) {
     val conversations by viewModel.conversations.collectAsStateWithLifecycle()
 
@@ -43,7 +42,7 @@ fun ConversationScreen(
                 },
                 actions = {
                     TalkieIconButton(icon = Icons.Default.Create) {
-                        openChat()
+                        openChat("")
                     }
                 }
             )
@@ -56,7 +55,7 @@ fun ConversationScreen(
         ) {
             items(conversations, key = { it.id }) { message ->
                 ConversationItem(
-                    modifier = Modifier.clickable { openChat() },
+                    modifier = Modifier.clickable { openChat("") },
                     avatarUrl = message.avatarUrl,
                     title = message.title,
                     message = message.messagePreview,
