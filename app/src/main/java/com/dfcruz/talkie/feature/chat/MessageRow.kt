@@ -1,6 +1,7 @@
 package com.dfcruz.talkie.feature.chat
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.dfcruz.talkie.ui.component.TalkieAvatar
 import com.dfcruz.talkie.ui.component.TalkieText
 import com.dfcruz.talkie.ui.theme.TalkieTheme
+import com.dfcruz.talkie.util.compose.PreviewColumn
 
 @Composable
 fun MessageRow(
@@ -117,109 +119,106 @@ fun MessageDeliveryTimeLabel(
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun MessageRowPreview() {
-    TalkieTheme {
-        CompositionLocalProvider(
-            LocalMessageDisplayPolicy provides DirectMessageDisplayPolicy
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+    CompositionLocalProvider(
+        LocalMessageDisplayPolicy provides DirectMessageDisplayPolicy
+    ) {
+        PreviewColumn(modifier = Modifier, padding = PaddingValues(16.dp)) {
 
-                // ----- Current User Messages -----
-                MessageRow(
-                    message = Message(
-                        id = "1",
-                        content = MessageContent.Text("This is the first message from me (CurrentUser)."),
-                        createdAtLabel = "09:10",
-                        author = MessageAuthor.CurrentUser,
-                        groupPosition = MessageGroupPosition.First
-                    )
+            // ----- Current User Messages -----
+            MessageRow(
+                message = Message(
+                    id = "1",
+                    content = MessageContent.Text("This is the first message from me (CurrentUser)."),
+                    createdAtLabel = "09:10",
+                    author = MessageAuthor.CurrentUser,
+                    groupPosition = MessageGroupPosition.First
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+            )
+            Spacer(modifier = Modifier.height(4.dp))
 
-                MessageRow(
-                    message = Message(
-                        id = "2",
-                        content = MessageContent.Text("Middle message from me, should have middle bubble shape."),
-                        createdAtLabel = "09:11",
-                        author = MessageAuthor.CurrentUser,
-                        groupPosition = MessageGroupPosition.Middle(1)
-                    )
+            MessageRow(
+                message = Message(
+                    id = "2",
+                    content = MessageContent.Text("Middle message from me, should have middle bubble shape."),
+                    createdAtLabel = "09:11",
+                    author = MessageAuthor.CurrentUser,
+                    groupPosition = MessageGroupPosition.Middle(1)
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+            )
+            Spacer(modifier = Modifier.height(4.dp))
 
-                MessageRow(
-                    message = Message(
-                        id = "3",
-                        content = MessageContent.Text("Last message from me, bottom-right bubble."),
-                        createdAtLabel = "09:12",
-                        author = MessageAuthor.CurrentUser,
-                        groupPosition = MessageGroupPosition.Last(2)
-                    )
+            MessageRow(
+                message = Message(
+                    id = "3",
+                    content = MessageContent.Text("Last message from me, bottom-right bubble."),
+                    createdAtLabel = "09:12",
+                    author = MessageAuthor.CurrentUser,
+                    groupPosition = MessageGroupPosition.Last(2)
                 )
+            )
 
-                Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-                // ----- External User Messages -----
-                MessageRow(
-                    message = Message(
-                        id = "4",
-                        content = MessageContent.Text("First message from other user."),
-                        createdAtLabel = "09:13",
-                        author = MessageAuthor.External(
-                            details = Author(
-                                id = "user_123",
-                                name = "Alice",
-                                avatarInitials = "A",
-                                avatarUrl = null,
-                                status = UserStatus.ONLINE
-                            )
-                        ),
-                        groupPosition = MessageGroupPosition.First
-                    )
+            // ----- External User Messages -----
+            MessageRow(
+                message = Message(
+                    id = "4",
+                    content = MessageContent.Text("First message from other user."),
+                    createdAtLabel = "09:13",
+                    author = MessageAuthor.External(
+                        details = Author(
+                            id = "user_123",
+                            name = "Alice",
+                            avatarInitials = "A",
+                            avatarUrl = null,
+                            status = UserStatus.ONLINE
+                        )
+                    ),
+                    groupPosition = MessageGroupPosition.First
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+            )
+            Spacer(modifier = Modifier.height(4.dp))
 
-                MessageRow(
-                    message = Message(
-                        id = "5",
-                        content = MessageContent.Text("Middle message from other user."),
-                        createdAtLabel = "09:14",
-                        author = MessageAuthor.External(
-                            details = Author(
-                                id = "user_123",
-                                name = "Alice",
-                                avatarInitials = "A",
-                                avatarUrl = null,
-                                status = UserStatus.ONLINE
-                            )
-                        ),
-                        groupPosition = MessageGroupPosition.Middle(1)
-                    )
+            MessageRow(
+                message = Message(
+                    id = "5",
+                    content = MessageContent.Text("Middle message from other user."),
+                    createdAtLabel = "09:14",
+                    author = MessageAuthor.External(
+                        details = Author(
+                            id = "user_123",
+                            name = "Alice",
+                            avatarInitials = "A",
+                            avatarUrl = null,
+                            status = UserStatus.ONLINE
+                        )
+                    ),
+                    groupPosition = MessageGroupPosition.Middle(1)
                 )
+            )
 
-                Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
-                MessageRow(
-                    message = Message(
-                        id = "6",
-                        content = MessageContent.Text("Last message from other user."),
-                        createdAtLabel = "09:15",
-                        author = MessageAuthor.External(
-                            details = Author(
-                                id = "user_123",
-                                name = "Alice",
-                                avatarInitials = "A",
-                                avatarUrl = null,
-                                status = UserStatus.ONLINE
-                            )
-                        ),
-                        groupPosition = MessageGroupPosition.Last(2)
-                    )
+            MessageRow(
+                message = Message(
+                    id = "6",
+                    content = MessageContent.Text("Last message from other user."),
+                    createdAtLabel = "09:15",
+                    author = MessageAuthor.External(
+                        details = Author(
+                            id = "user_123",
+                            name = "Alice",
+                            avatarInitials = "A",
+                            avatarUrl = null,
+                            status = UserStatus.ONLINE
+                        )
+                    ),
+                    groupPosition = MessageGroupPosition.Last(2)
                 )
-            }
+            )
         }
-
     }
 }

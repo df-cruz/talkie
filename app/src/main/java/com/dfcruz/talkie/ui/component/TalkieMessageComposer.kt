@@ -25,9 +25,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.dfcruz.talkie.ui.theme.TalkieTheme
+import com.dfcruz.talkie.util.compose.PreviewBox
 
 @Composable
 fun TalkieMessageComposer(
@@ -97,10 +98,10 @@ private fun SendMessageButton(onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun TalkieMessageComposerPreview() {
-    TalkieTheme {
+    PreviewBox {
         TalkieMessageComposer {}
     }
 }
