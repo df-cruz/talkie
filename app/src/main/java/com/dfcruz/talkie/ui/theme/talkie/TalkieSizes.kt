@@ -5,7 +5,7 @@ import com.dfcruz.talkie.ui.theme.ThemeSizes
 
 val talkieSizes = ThemeSizes(
     avatarSmall = 28.dp,
-    avatarMedium = 36.dp,
+    avatarMedium = 40.dp,
     avatarLarge = 48.dp,
     messageMaxWidth = 280.dp,
 )

@@ -9,4 +9,7 @@ sealed interface NavRoute : NavKey
 data object Conversations : NavRoute
 
 @Serializable
+data object CreateConversation : NavRoute
+
+@Serializable
 data class Chat(val conversationId: String) : NavRoute

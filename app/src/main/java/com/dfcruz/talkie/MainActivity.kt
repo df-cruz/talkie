@@ -16,8 +16,10 @@ import com.dfcruz.talkie.feature.chat.ChatScreen
 import com.dfcruz.talkie.feature.chat.ChatViewModel
 import com.dfcruz.talkie.feature.conversation.ConversationScreen
 import com.dfcruz.talkie.feature.conversation.ConversationsViewModel
+import com.dfcruz.talkie.feature.createconversation.CreateConversationScreen
 import com.dfcruz.talkie.navigation.Chat
 import com.dfcruz.talkie.navigation.Conversations
+import com.dfcruz.talkie.navigation.CreateConversation
 import com.dfcruz.talkie.ui.theme.TalkieTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,7 +45,12 @@ class MainActivity : ComponentActivity() {
                         entry<Conversations> { key ->
                             val viewModel = hiltViewModel<ConversationsViewModel>()
                             ConversationScreen(viewModel = viewModel) { conversationId ->
-                                backStack.add(Chat(conversationId))
+                                backStack.add(CreateConversation)
+                            }
+                        }
+                        entry<CreateConversation> { key ->
+                            CreateConversationScreen() {
+                                backStack.removeLastOrNull()
                             }
                         }
                         entry<Chat> { key ->
