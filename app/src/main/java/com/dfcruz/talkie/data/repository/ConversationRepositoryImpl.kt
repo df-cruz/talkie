@@ -2,14 +2,38 @@ package com.dfcruz.talkie.data.repository
 
 import com.dfcruz.talkie.data.local.dao.ConversationDao
 import com.dfcruz.talkie.data.local.entity.ConversationMemberEntity
+import com.dfcruz.talkie.data.remote.rest.TalkieService
 import com.dfcruz.talkie.domain.Conversation
+import com.dfcruz.talkie.domain.respositorie.ConversationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class ConversationRepositoryImpl @Inject constructor(
     private val conversationDao: ConversationDao,
+    private val talkieService: TalkieService
 ) : ConversationRepository {
+
+    override fun getConversationsFlow(userId: String): Flow<List<Conversation>> {
+        return conversationDao.getConversationsFlows()
+            .map { conversations ->
+                conversations.map { it.toDomain() }
+            }
+            .onStart {
+
+            }
+    }
+
+    override suspend fun fetchConversations(userId: String) {
+        talkieService.getAllConversations(userId).let { conversations ->
+            conversations
+                .takeIf { it.isNotEmpty() }
+                ?.run {
+                    conversationDao.insert(conversations = conversations.map { it.toEntity() })
+                }
+        }
+    }
 
     override suspend fun getConversation(conversationId: String): Conversation? {
         return conversationDao.getConversation(conversationId)?.toDomain()
@@ -35,7 +59,4 @@ class ConversationRepositoryImpl @Inject constructor(
         conversationDao.removeMember(conversationId, userId)
     }
 
-    override fun getConversationsFlow(): Flow<List<Conversation>> {
-        return conversationDao.getConversationsFlows().map { it.map { it.toDomain() } }
-    }
 }

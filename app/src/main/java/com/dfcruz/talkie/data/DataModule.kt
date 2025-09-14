@@ -1,12 +1,14 @@
 package com.dfcruz.talkie.data
 
+import com.dfcruz.talkie.data.remote.rest.KtorService
+import com.dfcruz.talkie.data.remote.rest.TalkieService
 import com.dfcruz.talkie.data.remote.websocket.OkHttpWebsocket
 import com.dfcruz.talkie.data.remote.websocket.Websocket
-import com.dfcruz.talkie.data.repository.ConversationRepository
+import com.dfcruz.talkie.domain.respositorie.ConversationRepository
 import com.dfcruz.talkie.data.repository.ConversationRepositoryImpl
-import com.dfcruz.talkie.data.repository.MessageRepository
+import com.dfcruz.talkie.domain.respositorie.MessageRepository
 import com.dfcruz.talkie.data.repository.MessageRepositoryImpl
-import com.dfcruz.talkie.data.repository.UserRepository
+import com.dfcruz.talkie.domain.respositorie.UserRepository
 import com.dfcruz.talkie.data.repository.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -28,4 +30,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindsWebSocket(web: OkHttpWebsocket): Websocket
+
+    @Binds
+    abstract fun bindTalkieService(service: KtorService): TalkieService
 }

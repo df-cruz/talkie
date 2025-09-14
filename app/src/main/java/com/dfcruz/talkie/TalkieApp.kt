@@ -14,13 +14,13 @@ class TalkieApp : Application() {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectAll()
-                    .penaltyDeath()
+                    .penaltyLog()
                     .build()
             )
             StrictMode.setVmPolicy(
                 StrictMode.VmPolicy.Builder()
                     .detectAll()
-                    .penaltyDeath()
+                    .penaltyLog()
                     .build()
             )
         }

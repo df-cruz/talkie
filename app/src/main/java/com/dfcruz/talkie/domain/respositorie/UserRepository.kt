@@ -1,4 +1,4 @@
-package com.dfcruz.talkie.data.repository
+package com.dfcruz.talkie.domain.respositorie
 
 import com.dfcruz.talkie.domain.User
 

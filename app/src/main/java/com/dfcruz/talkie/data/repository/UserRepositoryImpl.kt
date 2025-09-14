@@ -2,6 +2,7 @@ package com.dfcruz.talkie.data.repository
 
 import com.dfcruz.talkie.data.local.dao.UserDao
 import com.dfcruz.talkie.domain.User
+import com.dfcruz.talkie.domain.respositorie.UserRepository
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(

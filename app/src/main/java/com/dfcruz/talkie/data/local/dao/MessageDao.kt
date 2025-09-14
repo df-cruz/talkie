@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
 import com.dfcruz.talkie.data.local.entity.MessageEntity
 import com.dfcruz.talkie.data.local.entity.MessageReadByEntity
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,9 @@ interface MessageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(message: MessageEntity)
+
+    @Upsert()
+    suspend fun insert(messages: List<MessageEntity>)
 
     @Update
     suspend fun update(message: MessageEntity)

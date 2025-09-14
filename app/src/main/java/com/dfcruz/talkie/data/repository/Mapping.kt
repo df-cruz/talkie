@@ -3,9 +3,16 @@ package com.dfcruz.talkie.data.repository
 import com.dfcruz.talkie.data.local.entity.ConversationEntity
 import com.dfcruz.talkie.data.local.entity.MessageEntity
 import com.dfcruz.talkie.data.local.entity.UserEntity
+import com.dfcruz.talkie.data.remote.rest.dto.ConversationResponse
+import com.dfcruz.talkie.data.remote.rest.dto.MessageResponse
 import com.dfcruz.talkie.domain.Conversation
 import com.dfcruz.talkie.domain.Message
 import com.dfcruz.talkie.domain.User
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import java.util.Date
+import kotlin.time.ExperimentalTime
 
 fun UserEntity.toDomain(): User {
     return User(
@@ -31,7 +38,7 @@ fun User.toEntity(): UserEntity {
     )
 }
 
-fun MessageEntity.toDomain(user: User = User(id = userId ?: "")): Message {
+fun MessageEntity.toDomain(user: User = User(id = userId.orEmpty())): Message {
     return Message(
         id = this.id,
         conversationId = this.conversationId,
@@ -64,7 +71,7 @@ fun ConversationEntity.toDomain(
 ): Conversation {
     return Conversation(
         id = this.id,
-        avatarUrl = this.avatar ?: "",
+        avatarUrl = this.avatar.orEmpty(),
         name = this.name,
         messageDraft = this.messageDraft,
         messages = messages,
@@ -88,3 +95,34 @@ fun Conversation.toEntity(): ConversationEntity {
         deletedAt = this.deletedAt
     )
 }
+
+
+fun MessageResponse.toEntity(): MessageEntity {
+    return MessageEntity(
+        id = id,
+        conversationId = conversationId,
+        userId = userId,
+        text = text,
+        silent = silent,
+        createdAt = createdAt?.toDate(),
+        updatedAt = updatedAt?.toDate(),
+        deletedAt = deletedAt?.toDate()
+    )
+}
+
+fun ConversationResponse.toEntity(): ConversationEntity {
+    return ConversationEntity(
+        id = id,
+        conversationOwnerId = conversationOwnerId,
+        name = name,
+        avatar = avatar,
+        messageDraft = messageDraft,
+        createdAt = createdAt?.toDate(),
+        updatedAt = updatedAt?.toDate(),
+        deletedAt = deletedAt?.toDate()
+    )
+}
+
+@OptIn(ExperimentalTime::class)
+private fun LocalDateTime.toDate(timeZone: TimeZone = TimeZone.UTC): Date =
+    Date(this.toInstant(timeZone).toEpochMilliseconds())

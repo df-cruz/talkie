@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
 
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.datetime)
 
     ksp(libs.room.compiler)
     implementation(libs.room.runtime)
@@ -74,6 +75,8 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+
+    implementation(libs.bundles.ktor)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

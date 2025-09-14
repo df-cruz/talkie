@@ -1,6 +1,6 @@
 package com.dfcruz.talkie.domain.usecase
 
-import com.dfcruz.talkie.data.repository.ConversationRepository
+import com.dfcruz.talkie.domain.respositorie.ConversationRepository
 import com.dfcruz.talkie.domain.Conversation
 import javax.inject.Inject
 
