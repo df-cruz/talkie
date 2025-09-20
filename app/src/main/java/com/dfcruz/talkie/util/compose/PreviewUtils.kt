@@ -82,7 +82,6 @@ fun PreviewColumn(
         TalkieTheme {
             Column(
                 modifier
-
                     .background(backGroundColor())
                     .padding(padding),
             ) {

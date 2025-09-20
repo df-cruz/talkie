@@ -24,6 +24,7 @@ import com.dfcruz.talkie.util.compose.PreviewColumn
 
 @Composable
 fun MessageRow(
+    modifier: Modifier = Modifier,
     message: Message,
     onUserClick: (String) -> Unit = {},
     onMessagedClick: (String) -> Unit = {},
@@ -32,7 +33,7 @@ fun MessageRow(
     val messageDisplayPolicy = LocalMessageDisplayPolicy.current
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = ChatBubblePolicy.messageAlignment(message.author)
     ) {
         when {

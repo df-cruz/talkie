@@ -42,12 +42,14 @@ sealed class Either<out A, out B> {
 
     fun leftOrNull(): A? = fold({ it }, { null })
 
-    inline fun <R> catch(f: () -> R): Either<Throwable, R> =
-        try {
-            f().right()
-        } catch (t: Throwable) {
-            t.nonFatalOrThrow().left()
-        }
+    companion object {
+        inline fun <R> catch(f: () -> R): Either<Throwable, R> =
+            try {
+                f().right()
+            } catch (t: Throwable) {
+                t.nonFatalOrThrow().left()
+            }
+    }
 
 }
 

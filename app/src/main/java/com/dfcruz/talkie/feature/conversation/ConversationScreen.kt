@@ -11,6 +11,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -24,9 +25,10 @@ import com.dfcruz.talkie.ui.component.TalkieText
 fun ConversationScreen(
     modifier: Modifier = Modifier,
     viewModel: ConversationsViewModel,
+    createConversation: () -> Unit,
     openChat: (String) -> Unit
 ) {
-    val conversations by viewModel.conversations.collectAsStateWithLifecycle()
+    val conversations by viewModel.conversations.collectAsState()
 
     Scaffold(
         modifier = modifier
@@ -41,9 +43,7 @@ fun ConversationScreen(
                     TalkieAvatar(size = 36.dp) {}
                 },
                 actions = {
-                    TalkieIconButton(icon = Icons.Default.Create) {
-                        openChat("")
-                    }
+                    TalkieIconButton(icon = Icons.Default.Create, onClick = createConversation)
                 }
             )
         }
@@ -53,14 +53,14 @@ fun ConversationScreen(
                 .fillMaxSize()
                 .padding(contentPaddings),
         ) {
-            items(conversations, key = { it.id }) { message ->
+            items(conversations, key = { it.id }) { conversation ->
                 ConversationItem(
-                    modifier = Modifier.clickable { openChat("") },
-                    avatarUrl = message.avatarUrl,
-                    title = message.title,
-                    message = message.messagePreview,
-                    time = message.messageTime,
-                    unreadMessageCount = message.unreadMessageCount,
+                    modifier = Modifier.clickable { openChat(conversation.id) },
+                    avatarUrl = conversation.avatarUrl,
+                    title = conversation.title,
+                    message = conversation.messagePreview,
+                    time = conversation.messageTime,
+                    unreadMessageCount = conversation.unreadMessageCount,
                 )
             }
         }

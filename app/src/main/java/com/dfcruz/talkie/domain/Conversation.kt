@@ -17,10 +17,10 @@ import java.util.Date
  * @property deletedAt The timestamp when the conversation was deleted, or null if still active.
  */
 data class Conversation(
-    val id: String,
-    val avatarUrl: String,
-    val name: String?,
-    val messageDraft: String?,
+    val id: String = "",
+    val avatarUrl: String = "",
+    val name: String = "",
+    val messageDraft: String = "",
     val messages: List<Message> = emptyList(),
     val members: List<User> = emptyList(),
     val conversationOwner: User? = null,
@@ -48,11 +48,11 @@ data class Conversation(
      * Otherwise, returns the `name` properties of all members in the `members`.
      */
     fun getNameOrDefault(): String =
-        name?.ifBlank { null } ?: members.joinToString(separator = ", ") { it.name }
+        name.ifBlank { null } ?: members.joinToString(separator = ", ") { it.name }
 
     /**
      * Returns the last message sent in this conversation
      */
-    fun getLastMessage(): Message? = messages.last()
+    fun getLastMessage(): Message? = messages.lastOrNull()
 
 }

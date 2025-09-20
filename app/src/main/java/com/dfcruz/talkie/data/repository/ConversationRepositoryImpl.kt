@@ -7,6 +7,7 @@ import com.dfcruz.talkie.domain.Conversation
 import com.dfcruz.talkie.domain.respositorie.ConversationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
@@ -15,18 +16,15 @@ class ConversationRepositoryImpl @Inject constructor(
     private val talkieService: TalkieService
 ) : ConversationRepository {
 
-    override fun getConversationsFlow(userId: String): Flow<List<Conversation>> {
+    override fun getConversationsFlow(): Flow<List<Conversation>> {
         return conversationDao.getConversationsFlows()
             .map { conversations ->
                 conversations.map { it.toDomain() }
             }
-            .onStart {
-
-            }
     }
 
     override suspend fun fetchConversations(userId: String) {
-        talkieService.getAllConversations(userId).let { conversations ->
+        talkieService.getAllConversations(userId).orNull()?.let { conversations ->
             conversations
                 .takeIf { it.isNotEmpty() }
                 ?.run {

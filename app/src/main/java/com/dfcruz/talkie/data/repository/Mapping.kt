@@ -72,8 +72,8 @@ fun ConversationEntity.toDomain(
     return Conversation(
         id = this.id,
         avatarUrl = this.avatar.orEmpty(),
-        name = this.name,
-        messageDraft = this.messageDraft,
+        name = this.name.orEmpty(),
+        messageDraft = this.messageDraft.orEmpty(),
         messages = messages,
         members = members,
         conversationOwner = conversationOwner,

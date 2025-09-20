@@ -44,9 +44,10 @@ class MainActivity : ComponentActivity() {
                     entryProvider = entryProvider {
                         entry<Conversations> { key ->
                             val viewModel = hiltViewModel<ConversationsViewModel>()
-                            ConversationScreen(viewModel = viewModel) { conversationId ->
-                                backStack.add(CreateConversation)
-                            }
+                            ConversationScreen(
+                                viewModel = viewModel,
+                                createConversation = { backStack.add(CreateConversation) },
+                                openChat = { backStack.add(Chat(it)) })
                         }
                         entry<CreateConversation> { key ->
                             CreateConversationScreen() {

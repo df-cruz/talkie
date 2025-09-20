@@ -2,11 +2,11 @@ package com.dfcruz.talkie.data.repository
 
 import com.dfcruz.talkie.data.local.dao.MessageDao
 import com.dfcruz.talkie.data.remote.rest.TalkieService
+import com.dfcruz.talkie.data.remote.rest.dto.CreateMessageRequest
 import com.dfcruz.talkie.domain.Message
 import com.dfcruz.talkie.domain.respositorie.MessageRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class MessageRepositoryImpl @Inject constructor(
@@ -17,13 +17,10 @@ class MessageRepositoryImpl @Inject constructor(
     override fun getMessagesFlow(conversationId: String): Flow<List<Message>> {
         return messagesDao.getMessagesFlow(conversationId)
             .map { messages -> messages.map { it.toDomain() } }
-            .onStart {
-
-            }
     }
 
     override suspend fun fetchMessagesFlow(conversationId: String) {
-        talkieService.getMessagesByConversation(conversationId).let { messages ->
+        talkieService.getMessagesByConversation(conversationId).orNull()?.let { messages ->
             messages
                 .takeIf { it.isNotEmpty() }
                 ?.run {
@@ -44,11 +41,17 @@ class MessageRepositoryImpl @Inject constructor(
         messagesDao.update(message.toEntity())
     }
 
-    override suspend fun addMessage(message: Message) {
+    override suspend fun sendMessage(message: Message) {
+        val request = CreateMessageRequest(
+            id = message.id,
+            userId = message.user.id,
+            text = message.text,
+        )
+        talkieService.createMessage(message.conversationId, request)
         messagesDao.insert(message.toEntity())
     }
 
-    override suspend fun removeMessage(messageId: String) {
+    override suspend fun deleteMessage(messageId: String) {
         messagesDao.delete(messageId)
     }
 }

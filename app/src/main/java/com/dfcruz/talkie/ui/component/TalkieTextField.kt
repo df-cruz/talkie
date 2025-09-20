@@ -64,9 +64,7 @@ fun TalkieTextField(
         value = textState,
         onValueChange = {
             textState = it
-            if (value != it.text) {
-                onValueChange(it.text)
-            }
+            onValueChange(it.text)
         },
         textStyle = textStyle,
         cursorBrush = SolidColor(TalkieTheme.colors.primary),

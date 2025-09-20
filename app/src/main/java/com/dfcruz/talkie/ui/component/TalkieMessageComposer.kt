@@ -1,6 +1,10 @@
 package com.dfcruz.talkie.ui.component
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -25,50 +29,68 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.dfcruz.talkie.ui.theme.TalkieTheme
-import com.dfcruz.talkie.util.compose.PreviewBox
+import com.dfcruz.talkie.util.compose.PreviewColumn
 
 @Composable
 fun TalkieMessageComposer(
     modifier: Modifier = Modifier,
-    onSendMessage: (String) -> Unit
+    text: String,
+    onSendMessage: (String) -> Unit,
 ) {
-    var value by remember { mutableStateOf("") }
+    var value by remember(text) { mutableStateOf(text) }
 
     Surface(
         modifier = modifier,
     ) {
         Row(
             modifier = Modifier
-                .padding(vertical = 8.dp)
+                .padding(vertical = 4.dp)
+                .animateContentSize()
                 .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Bottom
         ) {
             Spacer(Modifier.width(16.dp))
 
+            val textStyle = TalkieTheme.typography.bodyMedium.copy(lineHeight = 20.sp)
             TalkieTextField(
                 modifier = modifier
                     .weight(1f)
                     .animateContentSize(),
                 value = value,
-                innerPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                textStyle = textStyle,
+                innerPadding = PaddingValues(
+                    start = 16.dp,
+                    top = 6.dp,
+                    end = 6.dp,
+                    bottom = 6.dp,
+                ),
                 onValueChange = { value = it },
                 placeholder = {
                     TalkieText(
                         text = "Write a message",
-                        style = TalkieTheme.typography.bodyMedium,
-                        color = TalkieTheme.colors.onSurfaceVariant
+                        style = textStyle,
+                        color = TalkieTheme.colors.onSurfaceVariant,
                     )
                 },
                 trailingContent = {
-                    if (!value.isEmpty()) {
-                        SendMessageButton {
-                            onSendMessage(value)
+                    Row(
+                        modifier = Modifier.height(36.dp),
+                    ) {
+                        AnimatedVisibility(
+                            visible = !value.isEmpty(),
+                            enter = fadeIn(animationSpec = tween(durationMillis = 150)),
+                            exit = fadeOut(animationSpec = tween(durationMillis = 150))
+                        ) {
+                            SendMessageButton {
+                                onSendMessage(value)
+                                value = ""
+                            }
                         }
-                    } else {
-                        Spacer(Modifier.height(28.dp))
                     }
                 }
             )
@@ -98,10 +120,12 @@ private fun SendMessageButton(onClick: () -> Unit) {
     }
 }
 
-@PreviewLightDark
+@Preview
 @Composable
 fun TalkieMessageComposerPreview() {
-    PreviewBox {
-        TalkieMessageComposer {}
+    var value by remember { mutableStateOf("") }
+    PreviewColumn {
+        TalkieMessageComposer(text = value, modifier = Modifier.background(Color.Red)) {}
+        TalkieMessageComposer(text = "3") {}
     }
 }

@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MessageDao {
 
-    @Query("SELECT * FROM messages WHERE conversationId = :conversationId ORDER BY createdAt ASC")
+    @Query("SELECT * FROM messages WHERE conversationId = :conversationId ORDER BY createdAt DESC")
     fun getMessagesFlow(conversationId: String): Flow<List<MessageEntity>>
 
-    @Query("SELECT * FROM messages WHERE conversationId = :conversationId ORDER BY createdAt ASC")
+    @Query("SELECT * FROM messages WHERE conversationId = :conversationId ORDER BY createdAt DESC")
     suspend fun getMessages(conversationId: String): List<MessageEntity>
 
     @Query("SELECT * FROM messages WHERE id = :messageId LIMIT 1")

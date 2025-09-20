@@ -14,10 +14,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dfcruz.talkie.ui.component.TalkieMessageComposer
 
 @Composable
@@ -25,7 +25,7 @@ fun ChatScreen(
     viewModel: ChatViewModel,
     onBackPressed: () -> Unit
 ) {
-    val chatUiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val chatUiState by viewModel.uiState.collectAsState()
 
     val visibilityPolicy = when (chatUiState.conversationType) {
         ConversationType.DIRECT -> DirectMessageDisplayPolicy
@@ -56,8 +56,11 @@ fun ChatScreen(
                     messages = chatUiState.messages,
                 )
                 TalkieMessageComposer(
-                    modifier = Modifier
-                ) { }
+                    modifier = Modifier,
+                    text = ""
+                ) { message ->
+                    viewModel.sendMessage(message)
+                }
             }
         }
     }
@@ -75,7 +78,7 @@ fun MessagesView(
     ) {
         items(messages, key = { it.id }) { message ->
             Spacer(Modifier.height(ChatBubblePolicy.spacing(message.groupPosition)))
-            MessageRow(message)
+            MessageRow(Modifier.animateItem(), message)
         }
     }
 }

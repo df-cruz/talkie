@@ -4,7 +4,7 @@ import com.dfcruz.talkie.domain.Conversation
 import kotlinx.coroutines.flow.Flow
 
 interface ConversationRepository {
-    fun getConversationsFlow(userId: String): Flow<List<Conversation>>
+    fun getConversationsFlow(): Flow<List<Conversation>>
     suspend fun fetchConversations(userId: String)
     suspend fun getConversation(conversationId: String): Conversation?
     suspend fun createConversation(conversation: Conversation)

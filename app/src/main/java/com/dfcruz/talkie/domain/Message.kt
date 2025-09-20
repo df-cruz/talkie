@@ -15,8 +15,8 @@ import java.util.Date
  * @property silent Whether this message was sent silently (no notifications).
  */
 data class Message(
-    val id: String,
-    val conversationId: String,
+    val id: String = "",
+    val conversationId: String = "",
     val text: String = "",
     val user: User = User(),
     val createdAt: Date? = null,
