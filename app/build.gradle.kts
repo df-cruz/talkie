@@ -22,8 +22,17 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
+            isDebuggable = true
+            buildConfigField("String", "BASE_URL", "\"localhost:9999\"")
+        }
+
+        release {
+            isMinifyEnabled = true
+            isDebuggable = false
+            buildConfigField("String", "BASE_URL", "\"localhost:9999\"")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -77,6 +86,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
 
     implementation(libs.bundles.ktor)
+
+    implementation(libs.datastore.preferences)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

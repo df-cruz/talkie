@@ -9,6 +9,7 @@ import java.util.Date
  * @property name Display name of the user.
  * @property avatar URL of the user's profile image.
  * @property isOnline Whether the user is currently online.
+ * @property isTyping Whether the user is currently typing.
  * @property createdAt When the account was created.
  * @property updatedAt When the account was last updated.
  * @property lastSeenAt The last time the user was active.
@@ -18,6 +19,7 @@ data class User(
     val name: String = "",
     val avatar: String = "",
     val isOnline: Boolean = false,
+    val isTyping: Boolean = false,
     val createdAt: Date? = null,
     val updatedAt: Date? = null,
     val lastSeenAt: Date? = null,

@@ -7,7 +7,7 @@ import com.dfcruz.talkie.ui.theme.ThemeShapes
 
 val talkieShapes = ThemeShapes(
     // Avatar
-    avatar = CircleShape,
+    avatar = RoundedCornerShape(8.dp),
 
     // Material shapes
     extraSmall = RoundedCornerShape(4.dp),

@@ -40,6 +40,7 @@ import com.dfcruz.talkie.util.compose.PreviewColumn
 fun TalkieMessageComposer(
     modifier: Modifier = Modifier,
     text: String,
+    onTyping: (String) -> Unit,
     onSendMessage: (String) -> Unit,
 ) {
     var value by remember(text) { mutableStateOf(text) }
@@ -69,7 +70,10 @@ fun TalkieMessageComposer(
                     end = 6.dp,
                     bottom = 6.dp,
                 ),
-                onValueChange = { value = it },
+                onValueChange = {
+                    value = it
+                    onTyping(it)
+                },
                 placeholder = {
                     TalkieText(
                         text = "Write a message",
@@ -125,7 +129,11 @@ private fun SendMessageButton(onClick: () -> Unit) {
 fun TalkieMessageComposerPreview() {
     var value by remember { mutableStateOf("") }
     PreviewColumn {
-        TalkieMessageComposer(text = value, modifier = Modifier.background(Color.Red)) {}
-        TalkieMessageComposer(text = "3") {}
+        TalkieMessageComposer(
+            text = value,
+            modifier = Modifier.background(Color.Red),
+            onTyping = {},
+            onSendMessage = {})
+        TalkieMessageComposer(text = "3", onTyping = {}, onSendMessage = {})
     }
 }

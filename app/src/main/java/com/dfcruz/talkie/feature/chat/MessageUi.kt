@@ -12,8 +12,9 @@ package com.dfcruz.talkie.feature.chat
  * @property isFailed Whether the message failed to send.
  * @property isRead Whether the message has been read by the recipient(s).
  * @property isSending Whether the message is still in the process of being sent.
+ * @property isSending Whether the message is still in the process of being sent.
  */
-data class Message(
+data class MessageUI(
     val id: String,
     val content: MessageContent,
     val createdAtLabel: String,
@@ -22,7 +23,8 @@ data class Message(
     val isEdited: Boolean = false,
     val isFailed: Boolean = false,
     val isRead: Boolean = false,
-    val isSending: Boolean = false
+    val isSending: Boolean = false,
+    val isDeleted: Boolean = false,
 )
 
 /**

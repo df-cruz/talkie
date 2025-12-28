@@ -19,6 +19,7 @@ data class Message(
     val conversationId: String = "",
     val text: String = "",
     val user: User = User(),
+    val status: MessageStatus = MessageStatus.PENDING,
     val createdAt: Date? = null,
     val updatedAt: Date? = null,
     val deletedAt: Date? = null,
@@ -46,4 +47,13 @@ data class Message(
      * Returns the age of the message in milliseconds, or null if [createdAt] is missing.
      */
     fun ageInMillis(): Long? = createdAt?.let { Date().time - it.time }
+}
+
+enum class MessageStatus {
+    PENDING, SYNCED, DELIVERED, READ;
+
+    companion object {
+        fun getStatus(value: String, default: MessageStatus = PENDING) = enumValues<MessageStatus>()
+            .firstOrNull { it.name.equals(value, ignoreCase = true) } ?: default
+    }
 }

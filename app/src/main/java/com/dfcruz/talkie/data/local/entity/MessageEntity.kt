@@ -29,6 +29,7 @@ data class MessageEntity(
     val conversationId: String,
     val userId: String?,
     val text: String,
+    val status: String,
     val createdAt: Date? = null,
     val updatedAt: Date? = null,
     val deletedAt: Date? = null,

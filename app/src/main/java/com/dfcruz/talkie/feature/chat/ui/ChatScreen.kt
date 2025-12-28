@@ -1,4 +1,4 @@
-package com.dfcruz.talkie.feature.chat
+package com.dfcruz.talkie.feature.chat.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +18,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.dfcruz.talkie.feature.chat.ChatViewModel
+import com.dfcruz.talkie.feature.chat.ConversationType
+import com.dfcruz.talkie.feature.chat.MessageUI
 import com.dfcruz.talkie.ui.component.TalkieMessageComposer
 
 @Composable
@@ -38,7 +41,7 @@ fun ChatScreen(
             topBar = {
                 ChatTopBar(
                     avatarImage = null,
-                    title = "John Doe",
+                    title = chatUiState.conversationName,
                     onBackPressed = onBackPressed
                 )
             },
@@ -57,10 +60,10 @@ fun ChatScreen(
                 )
                 TalkieMessageComposer(
                     modifier = Modifier,
-                    text = ""
-                ) { message ->
-                    viewModel.sendMessage(message)
-                }
+                    text = chatUiState.userInput,
+                    onTyping = { viewModel.userTyping(it) },
+                    onSendMessage = { viewModel.sendMessage(it) },
+                )
             }
         }
     }
@@ -69,7 +72,7 @@ fun ChatScreen(
 @Composable
 fun MessagesView(
     modifier: Modifier = Modifier,
-    messages: List<Message>
+    messages: List<MessageUI>
 ) {
     LazyColumn(
         modifier = modifier,

@@ -12,4 +12,5 @@ interface ConversationRepository {
     suspend fun deleteConversation(conversationId: String)
     suspend fun addUserToConversation(conversationId: String, userId: String)
     suspend fun removeUserFromConversation(conversationId: String, userId: String)
+    suspend fun saveMessageDraft(text: String)
 }

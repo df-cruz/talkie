@@ -1,6 +1,7 @@
-package com.dfcruz.talkie.feature.chat
+package com.dfcruz.talkie.feature.chat.ui
 
 import androidx.compose.runtime.Composable
+import com.dfcruz.talkie.feature.chat.MessageContent
 import com.dfcruz.talkie.ui.component.TalkieText
 import com.dfcruz.talkie.ui.theme.TalkieTheme
 

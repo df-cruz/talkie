@@ -1,5 +1,6 @@
 package com.dfcruz.talkie.data.remote.websocket
 
+import com.dfcruz.talkie.BuildConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -11,7 +12,6 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import javax.inject.Inject
 
-private const val BASE_URL = "https://3333.com"
 private const val EVENT_BUFFER_CAPACITY = 50
 
 class OkHttpWebsocket @Inject constructor() : Websocket {
@@ -42,7 +42,7 @@ class OkHttpWebsocket @Inject constructor() : Websocket {
 
     override fun connect(): Flow<WebsocketResultEnvelope> {
         if (socket == null) {
-            val request = Request.Builder().url(BASE_URL).build()
+            val request = Request.Builder().url(BuildConfig.BASE_URL + "/channel").build()
             socket = client.newWebSocket(request, socketListener)
         }
         return events.asSharedFlow()

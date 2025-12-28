@@ -1,4 +1,4 @@
-package com.dfcruz.talkie.feature.chat
+package com.dfcruz.talkie.feature.chat.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
@@ -6,6 +6,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.dfcruz.talkie.feature.chat.MessageAuthor
+import com.dfcruz.talkie.feature.chat.MessageGroupPosition
 import com.dfcruz.talkie.ui.theme.TalkieTheme
 
 /**

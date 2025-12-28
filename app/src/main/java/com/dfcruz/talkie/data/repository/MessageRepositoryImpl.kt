@@ -19,7 +19,7 @@ class MessageRepositoryImpl @Inject constructor(
             .map { messages -> messages.map { it.toDomain() } }
     }
 
-    override suspend fun fetchMessagesFlow(conversationId: String) {
+    override suspend fun fetchMessages(conversationId: String) {
         talkieService.getMessagesByConversation(conversationId).orNull()?.let { messages ->
             messages
                 .takeIf { it.isNotEmpty() }

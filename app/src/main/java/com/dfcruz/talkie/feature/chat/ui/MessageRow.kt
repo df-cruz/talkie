@@ -1,4 +1,4 @@
-package com.dfcruz.talkie.feature.chat
+package com.dfcruz.talkie.feature.chat.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,9 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.dfcruz.talkie.R
+import com.dfcruz.talkie.feature.chat.Author
+import com.dfcruz.talkie.feature.chat.MessageAuthor
+import com.dfcruz.talkie.feature.chat.MessageContent
+import com.dfcruz.talkie.feature.chat.MessageGroupPosition
+import com.dfcruz.talkie.feature.chat.MessageUI
+import com.dfcruz.talkie.feature.chat.UserStatus
 import com.dfcruz.talkie.ui.component.TalkieAvatar
 import com.dfcruz.talkie.ui.component.TalkieText
 import com.dfcruz.talkie.ui.theme.TalkieTheme
@@ -25,7 +33,7 @@ import com.dfcruz.talkie.util.compose.PreviewColumn
 @Composable
 fun MessageRow(
     modifier: Modifier = Modifier,
-    message: Message,
+    message: MessageUI,
     onUserClick: (String) -> Unit = {},
     onMessagedClick: (String) -> Unit = {},
     onMessagedLongClick: (String) -> Unit = {},
@@ -68,7 +76,17 @@ fun MessageRow(
                 shape = ChatBubblePolicy.bubbleShape(message.author, message.groupPosition),
                 onClick = { onMessagedClick(message.id) },
                 onLongClick = { onMessagedLongClick(message.id) },
-                centerContent = { MessageContentView(message.content) },
+                centerContent = {
+                    when {
+                        message.isDeleted -> {
+                            MessageContentView(MessageContent.Text(stringResource(R.string.message_deleted_by_the_author)))
+                        }
+
+                        else -> {
+                            MessageContentView(message.content)
+                        }
+                    }
+                },
                 bottomContent = {
                     MessageDeliveryTimeLabel(
                         modifier = Modifier.align(Alignment.End),
@@ -130,7 +148,7 @@ fun MessageRowPreview() {
 
             // ----- Current User Messages -----
             MessageRow(
-                message = Message(
+                message = MessageUI(
                     id = "1",
                     content = MessageContent.Text("This is the first message from me (CurrentUser)."),
                     createdAtLabel = "09:10",
@@ -141,7 +159,7 @@ fun MessageRowPreview() {
             Spacer(modifier = Modifier.height(4.dp))
 
             MessageRow(
-                message = Message(
+                message = MessageUI(
                     id = "2",
                     content = MessageContent.Text("Middle message from me, should have middle bubble shape."),
                     createdAtLabel = "09:11",
@@ -152,7 +170,7 @@ fun MessageRowPreview() {
             Spacer(modifier = Modifier.height(4.dp))
 
             MessageRow(
-                message = Message(
+                message = MessageUI(
                     id = "3",
                     content = MessageContent.Text("Last message from me, bottom-right bubble."),
                     createdAtLabel = "09:12",
@@ -165,7 +183,7 @@ fun MessageRowPreview() {
 
             // ----- External User Messages -----
             MessageRow(
-                message = Message(
+                message = MessageUI(
                     id = "4",
                     content = MessageContent.Text("First message from other user."),
                     createdAtLabel = "09:13",
@@ -184,7 +202,7 @@ fun MessageRowPreview() {
             Spacer(modifier = Modifier.height(4.dp))
 
             MessageRow(
-                message = Message(
+                message = MessageUI(
                     id = "5",
                     content = MessageContent.Text("Middle message from other user."),
                     createdAtLabel = "09:14",
@@ -204,7 +222,7 @@ fun MessageRowPreview() {
             Spacer(modifier = Modifier.height(4.dp))
 
             MessageRow(
-                message = Message(
+                message = MessageUI(
                     id = "6",
                     content = MessageContent.Text("Last message from other user."),
                     createdAtLabel = "09:15",

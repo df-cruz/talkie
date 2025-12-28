@@ -1,6 +1,9 @@
-package com.dfcruz.talkie.feature.chat
+package com.dfcruz.talkie.feature.chat.ui
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.dfcruz.talkie.feature.chat.MessageAuthor
+import com.dfcruz.talkie.feature.chat.MessageGroupPosition
+import com.dfcruz.talkie.feature.chat.MessageUI
 
 /**
  * Defines the rules for how certain parts of a chat message
@@ -14,18 +17,18 @@ interface MessageDisplayPolicy {
     /**
      * Determines whether the author's avatar should be shown for this message.
      */
-    fun shouldShowAvatar(message: Message): Boolean
+    fun shouldShowAvatar(message: MessageUI): Boolean
 
     /**
      * Determines whether a placeholder should be reserved when the avatar is hidden,
      * in order to keep message bubbles aligned consistently.
      */
-    fun shouldReserveAvatarSpace(message: Message): Boolean
+    fun shouldReserveAvatarSpace(message: MessageUI): Boolean
 
     /**
      * Determines whether the author's username should be shown for this message.
      */
-    fun shouldShowUsername(message: Message): Boolean
+    fun shouldShowUsername(message: MessageUI): Boolean
 }
 
 /**
@@ -35,9 +38,9 @@ interface MessageDisplayPolicy {
  * avatars or usernames because the context is clear.
  */
 object DirectMessageDisplayPolicy : MessageDisplayPolicy {
-    override fun shouldShowAvatar(message: Message): Boolean = false
-    override fun shouldReserveAvatarSpace(message: Message): Boolean = false
-    override fun shouldShowUsername(message: Message): Boolean = false
+    override fun shouldShowAvatar(message: MessageUI): Boolean = false
+    override fun shouldReserveAvatarSpace(message: MessageUI): Boolean = false
+    override fun shouldShowUsername(message: MessageUI): Boolean = false
 }
 
 /**
@@ -53,16 +56,16 @@ object DirectMessageDisplayPolicy : MessageDisplayPolicy {
  * the speaker at the right places.
  */
 object GroupMessageDisplayPolicy : MessageDisplayPolicy {
-    override fun shouldShowAvatar(message: Message): Boolean {
+    override fun shouldShowAvatar(message: MessageUI): Boolean {
         return message.author is MessageAuthor.External &&
                 message.groupPosition is MessageGroupPosition.Last
     }
 
-    override fun shouldReserveAvatarSpace(message: Message): Boolean {
+    override fun shouldReserveAvatarSpace(message: MessageUI): Boolean {
         return message.author is MessageAuthor.External
     }
 
-    override fun shouldShowUsername(message: Message): Boolean {
+    override fun shouldShowUsername(message: MessageUI): Boolean {
         return message.groupPosition == MessageGroupPosition.First &&
                 message.author is MessageAuthor.External
     }

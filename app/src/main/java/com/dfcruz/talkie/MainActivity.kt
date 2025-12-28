@@ -12,7 +12,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
-import com.dfcruz.talkie.feature.chat.ChatScreen
+import com.dfcruz.talkie.feature.chat.ui.ChatScreen
 import com.dfcruz.talkie.feature.chat.ChatViewModel
 import com.dfcruz.talkie.feature.conversation.ConversationScreen
 import com.dfcruz.talkie.feature.conversation.ConversationsViewModel

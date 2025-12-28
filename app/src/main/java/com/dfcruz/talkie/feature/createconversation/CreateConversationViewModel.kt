@@ -1,21 +1,36 @@
 package com.dfcruz.talkie.feature.createconversation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.dfcruz.talkie.domain.User
+import com.dfcruz.talkie.domain.respositorie.ConversationRepository
+import com.dfcruz.talkie.domain.usecase.CreateConversationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateConversationViewModel @Inject constructor(
-
+    private val conversationRepository: ConversationRepository,
+    private val createConversationUseCase: CreateConversationUseCase,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<CreateConversationUi> =
         MutableStateFlow(fakeCreateConversationUi)
     val uiState: StateFlow<CreateConversationUi> = _uiState.asStateFlow()
 
+
+    fun createConversation(contact: ContactInformation) {
+        viewModelScope.launch {
+            createConversationUseCase(
+                listOf(User())
+            )
+        }
+
+    }
 }
 
 

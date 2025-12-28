@@ -1,5 +1,6 @@
 package com.dfcruz.talkie.data.remote.rest
 
+import com.dfcruz.talkie.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +27,7 @@ object ServiceModule {
                 level = LogLevel.ALL
             }
             defaultRequest {
-                url("localhost")
+                url(BuildConfig.BASE_URL)
             }
             install(ContentNegotiation) {
                 json()

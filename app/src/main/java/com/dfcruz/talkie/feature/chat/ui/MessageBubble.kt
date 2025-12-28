@@ -1,4 +1,4 @@
-package com.dfcruz.talkie.feature.chat
+package com.dfcruz.talkie.feature.chat.ui
 
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column

@@ -57,4 +57,8 @@ class ConversationRepositoryImpl @Inject constructor(
         conversationDao.removeMember(conversationId, userId)
     }
 
+    override suspend fun saveMessageDraft(text: String) {
+
+    }
+
 }

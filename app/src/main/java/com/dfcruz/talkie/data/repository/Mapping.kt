@@ -7,6 +7,7 @@ import com.dfcruz.talkie.data.remote.rest.dto.ConversationResponse
 import com.dfcruz.talkie.data.remote.rest.dto.MessageResponse
 import com.dfcruz.talkie.domain.Conversation
 import com.dfcruz.talkie.domain.Message
+import com.dfcruz.talkie.domain.MessageStatus
 import com.dfcruz.talkie.domain.User
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -44,6 +45,7 @@ fun MessageEntity.toDomain(user: User = User(id = userId.orEmpty())): Message {
         conversationId = this.conversationId,
         text = this.text,
         user = user,
+        status = MessageStatus.Companion.getStatus(status),
         createdAt = this.createdAt,
         updatedAt = this.updatedAt,
         deletedAt = this.deletedAt,
@@ -57,6 +59,7 @@ fun Message.toEntity(): MessageEntity {
         conversationId = this.conversationId,
         userId = this.user.id.ifEmpty { null },
         text = this.text,
+        status = status.name,
         createdAt = this.createdAt,
         updatedAt = this.updatedAt,
         deletedAt = this.deletedAt,
@@ -103,6 +106,7 @@ fun MessageResponse.toEntity(): MessageEntity {
         conversationId = conversationId,
         userId = userId,
         text = text,
+        status = MessageStatus.Companion.getStatus(status, default = MessageStatus.SYNCED).name,
         silent = silent,
         createdAt = createdAt?.toDate(),
         updatedAt = updatedAt?.toDate(),

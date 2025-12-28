@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">talkie</string>
+    <string name="message_deleted_by_the_author">Message deleted by the author</string>
 </resources>
